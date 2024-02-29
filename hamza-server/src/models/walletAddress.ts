@@ -9,10 +9,6 @@ import { generateEntityId } from "@medusajs/medusa/dist/utils";
 
 import { User } from './user';
 
-// This is the WalletAddress entity, It is a child of the user entity
-// please look over the code and make suggestions for improvement
-// write the suggestions as comments in the code. 
-
 @Entity()
 export class WalletAddress extends SoftDeletableEntity {
     //TODO: Add validation to the address field
