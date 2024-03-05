@@ -8,8 +8,8 @@ import { Store } from './store';
 @Entity()
 export class User extends MedusaUser {
 
-  @OneToMany(() => WalletAddress, walletAddress => walletAddress.user)
-  walletAddresses!: WalletAddress[];
+  // @OneToMany(() => WalletAddress, walletAddress => walletAddress.user)
+  // walletAddresses!: WalletAddress[];
 
   @Index("UserStoreId")
   @Column({ nullable: true })

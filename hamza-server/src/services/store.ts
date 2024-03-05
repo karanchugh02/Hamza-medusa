@@ -1,8 +1,9 @@
 import { Lifetime } from "awilix"
 import { 
   FindConfig,
-  StoreService as MedusaStoreService, Store, User
+  StoreService as MedusaStoreService, Store
 } from "@medusajs/medusa"
+import { User } from "../models/user"
 
 
 class StoreService extends MedusaStoreService {
