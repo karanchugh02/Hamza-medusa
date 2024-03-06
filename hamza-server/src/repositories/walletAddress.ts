@@ -5,6 +5,3 @@ import {
 
 export const WalletAddressRepository = dataSource
   .getRepository(WalletAddress)
-  .extend({
-    
-  })

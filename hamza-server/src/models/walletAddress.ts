@@ -15,8 +15,8 @@ export class WalletAddress extends SoftDeletableEntity {
     @Column({ unique: true})
     walletAddress!: string;
 
-    // @ManyToOne(() => User, user => user.walletAddresses)
-    // user!: User;
+    @ManyToOne(() => User, user => user.walletAddresses)
+    user!: User;
 
     @BeforeInsert()
     private beforeInsert(): void {

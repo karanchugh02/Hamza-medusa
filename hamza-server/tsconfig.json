@@ -17,14 +17,19 @@
     "jsx": "react-jsx",
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
-    "checkJs": false
+    "checkJs": false,
+    "noEmit": false,
+    "strict": false
   },
   "include": ["src/"],
   "exclude": [
-    "**/__tests__",
-    "**/__fixtures__",
-    "node_modules",
+    "dist",
     "build",
-    ".cache"
+    ".cache",
+    "tests",
+    "**/*.spec.js",
+    "**/*.spec.ts",
+    "node_modules",
+    ".eslintrc.js"
   ]
 }
