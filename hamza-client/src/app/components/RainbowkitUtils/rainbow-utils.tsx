@@ -18,12 +18,12 @@ export const { chains, publicClient, webSocketPublicClient } = configureChains(
   [optimismSepolia, mainnet, sepolia],
   [
     alchemyProvider({
-      apiKey: "VrVSe8y0T1pBnrwgzgFr2vtHl9Dtj3Fn",
+        apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY || "VrVSe8y0T1pBnrwgzgFr2vtHl9Dtj3Fn",
     }),
     jsonRpcProvider({
       rpc: () => {
         return {
-          http: "https://opt-sepolia.g.alchemy.com/v2/VrVSe8y0T1pBnrwgzgFr2vtHl9Dtj3Fn",
+          http: `https://opt-sepolia.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_API_KEY || "VrVSe8y0T1pBnrwgzgFr2vtHl9Dtj3Fn"}`,
         }
       },
     }),

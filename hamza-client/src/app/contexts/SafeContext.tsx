@@ -7,8 +7,6 @@ import { signerToSafeSmartAccount } from 'permissionless/accounts'
 import { Address, Client, Hash, Hex, PrivateKeyAccount, createClient, createPublicClient, PublicClient, encodeFunctionData, http, encodePacked, concatHex, zeroAddress, hexToBigInt, keccak256, getContractAddress } from 'viem'
 import { privateKeyToAccount } from 'viem/accounts'
 import { sepolia } from 'viem/chains'
-import { set } from 'lodash'
-import { initialize } from 'next/dist/server/lib/render-server'
  
 // // https://github.com/safe-global/safe-modules-deployments/blob/main/src/assets/safe-4337-module/v0.2.0/add-modules-lib.json#L8
 // const ADD_MODULE_LIB_ADDRESS = '0x8EcD4ec46D4D2a6B64fE960B3D64e8B94B2234eb'
@@ -571,8 +569,7 @@ const SafeContextProvider = ({ children }: { children: React.ReactNode }) => {
                 console.error("Error creating public client", e)
             }
 
-            const PIMLICO_API_KEY = "dfc7d1e4-804b-41dc-9be5-57084b57ea73";
-            const PIMLICO_API_V1 = `https://api.pimlico.io/v1/gnosis/rpc?apikey=${PIMLICO_API_KEY}`
+            const PIMLICO_API_V1 = `https://api.pimlico.io/v1/gnosis/rpc?apikey=${process.env.PIMLICO_API_KEY}`
 
             const bundlerClient = await createClient({
             transport: http(PIMLICO_API_V1),
@@ -585,7 +582,8 @@ const SafeContextProvider = ({ children }: { children: React.ReactNode }) => {
 
             console.log("bundlerClient", bundlerClient)
 
-            const PIMLICO_API_V2 = `https://api.pimlico.io/v2/gnosis/rpc?apikey=${PIMLICO_API_KEY}`
+            const PIMLICO_API_V2 = `https://api.pimlico.io/v2/gnosis/rpc?apikey=${process.env.PIMLICO_API_KEY
+}`
 
             const pimlicoPaymasterClient = await createClient({
             transport: http(PIMLICO_API_V2),
