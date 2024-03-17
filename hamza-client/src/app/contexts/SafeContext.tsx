@@ -10,62 +10,54 @@ import { sepolia } from 'viem/chains'
 import { set } from 'lodash'
 import { initialize } from 'next/dist/server/lib/render-server'
  
-// https://github.com/safe-global/safe-modules-deployments/blob/main/src/assets/safe-4337-module/v0.2.0/add-modules-lib.json#L8
-const ADD_MODULE_LIB_ADDRESS = '0x8EcD4ec46D4D2a6B64fE960B3D64e8B94B2234eb'
+// // https://github.com/safe-global/safe-modules-deployments/blob/main/src/assets/safe-4337-module/v0.2.0/add-modules-lib.json#L8
+// const ADD_MODULE_LIB_ADDRESS = '0x8EcD4ec46D4D2a6B64fE960B3D64e8B94B2234eb'
  
-// https://github.com/safe-global/safe-modules-deployments/blob/main/src/assets/safe-4337-module/v0.2.0/safe-4337-module.json#L8
-const SAFE_4337_MODULE_ADDRESS = '0xa581c4A4DB7175302464fF3C06380BC3270b4037'
+// // https://github.com/safe-global/safe-modules-deployments/blob/main/src/assets/safe-4337-module/v0.2.0/safe-4337-module.json#L8
+// const SAFE_4337_MODULE_ADDRESS = '0xa581c4A4DB7175302464fF3C06380BC3270b4037'
  
-// https://github.com/safe-global/safe-deployments/blob/main/src/assets/v1.4.1/safe_proxy_factory.json#L13
-const SAFE_PROXY_FACTORY_ADDRESS = '0x4e1DCf7AD4e460CfD30791CCC4F9c8a4f820ec67'
+// // https://github.com/safe-global/safe-deployments/blob/main/src/assets/v1.4.1/safe_proxy_factory.json#L13
+// const SAFE_PROXY_FACTORY_ADDRESS = '0x4e1DCf7AD4e460CfD30791CCC4F9c8a4f820ec67'
  
-// https://github.com/safe-global/safe-deployments/blob/main/src/assets/v1.4.1/safe.json#L13
-const SAFE_SINGLETON_ADDRESS = '0x41675C099F32341bf84BFc5382aF534df5C7461a'
+// // https://github.com/safe-global/safe-deployments/blob/main/src/assets/v1.4.1/safe.json#L13
+// const SAFE_SINGLETON_ADDRESS = '0x41675C099F32341bf84BFc5382aF534df5C7461a'
  
-// https://github.com/safe-global/safe-deployments/blob/main/src/assets/v1.4.1/multi_send.json#L13
-const SAFE_MULTISEND_ADDRESS = '0x38869bf66a61cF6bDB996A6aE40D5853Fd43B526'
+// // https://github.com/safe-global/safe-deployments/blob/main/src/assets/v1.4.1/multi_send.json#L13
+// const SAFE_MULTISEND_ADDRESS = '0x38869bf66a61cF6bDB996A6aE40D5853Fd43B526'
 
-
-type safeAccountContextValue = {
-    //These are NOT Type safe. Certainly need to be revisited
-    authenticationStatus: any
-    signer: any
-    PublicClient: any
-    bundlerClient: any
-    pimlicoPaymasterClient: any
-    walletClient: any
-    safeAccount: any
-    setAuthenticationStatus: (authenticationStatus: any) => void
-    setSigner: (signer: any) => void
-    setWalletClient: (walletClient: any) => void
-    deploySafe: () => Promise<void>
-}
-
-const initialState = {
-    authenticationStatus: "unauthenticated",
-    signer: null,
-    PublicClient: null,
-    bundlerClient: null,
-    pimlicoPaymasterClient: null,
-    walletClient: null,
-    safeAccount: null,
-    setAuthenticationStatus: (authenticationStatus: any) => {},
-    setSigner: (signer: any) => {},
-    setWalletClient: (walletClient: any) => {},
-    deploySafe: async () => {}
-}
-
-const safeAccountContext = createContext<safeAccountContextValue>(initialState)
-
-const useSafeAccountContext = () => {
-    const context = useContext(safeAccountContext)
-    if (!context) {
-        throw new Error('useSafeAccountContext must be used within a SafeAccountProvider')
+const safeConstAddresses = {
+    sepolia: {
+        ADD_MODULE_LIB_ADDRESS: '0x8EcD4ec46D4D2a6B64fE960B3D64e8B94B2234eb',
+        SAFE_4337_MODULE_ADDRESS: '0xa581c4A4DB7175302464fF3C06380BC3270b4037',
+        SAFE_PROXY_FACTORY_ADDRESS: '0x4e1DCf7AD4e460CfD30791CCC4F9c8a4f820ec67',
+        SAFE_SINGLETON_ADDRESS: '0x41675C099F32341bf84BFc5382aF534df5C7461a',
+        SAFE_MULTISEND_ADDRESS: '0x38869bf66a61cF6bDB996A6aE40D5853Fd43B526',
+        ERC20_PAYMASTER_ADDRESS: "0x0000000000325602a77416A16136FDafd04b299f",
+        USDC_TOKEN_ADDRESS: "0x46E34764D5288c6047aeC37E163F8C782a0b3C75",
     }
-    return context
 }
 
-export const enableModuleCallData = (safe4337ModuleAddress: `0x${string}`) => {
+const USE_PAYMASTER = true;
+const SPONSORSHIP_POLICY_ID = "sp_green_iron_lad";
+
+
+
+
+type UserOperation = {
+    sender: Address
+    nonce: bigint
+    initCode: Hex
+    callData: Hex
+    callGasLimit: bigint
+    verificationGasLimit: bigint
+    preVerificationGas: bigint
+    maxFeePerGas: bigint
+    maxPriorityFeePerGas: bigint
+    paymasterAndData: Hex
+    signature: Hex
+  }
+
+const enableModuleCallData = (safe4337ModuleAddress: `0x${string}`) => {
     return encodeFunctionData({
         abi: [
             {
@@ -94,7 +86,7 @@ type InternalTx = {
     operation: 0 | 1
 }
 
-export const encodeMultiSend = (txs: InternalTx[]): `0x${string}` => {
+const encodeMultiSend = (txs: InternalTx[]): `0x${string}` => {
     const data: `0x${string}` = `0x${txs.map((tx) => encodeInternalTransaction(tx)).join('')}`
 
     return encodeFunctionData({
@@ -112,7 +104,7 @@ export const encodeMultiSend = (txs: InternalTx[]): `0x${string}` => {
     })
 }
 
-export const encodeInternalTransaction = (tx: InternalTx): string => {
+const encodeInternalTransaction = (tx: InternalTx): string => {
     const encoded = encodePacked(
         ['uint8', 'address', 'uint256', 'uint256', 'bytes'],
         [tx.operation, tx.to, tx.value, BigInt(tx.data.slice(2).length / 2), tx.data],
@@ -138,7 +130,7 @@ const EIP712_SAFE_OPERATION_TYPE = {
     ]
 }
 
-export const signUserOperation = async (
+const signUserOperation = async (
     userOperation: UserOperation,
     signer: PrivateKeyAccount,
     chainId: any,
@@ -180,7 +172,7 @@ export const signUserOperation = async (
     return signatureBytes
 }
 
-export const generateApproveCallData = (erc20TokenAddress: Address, paymasterAddress: Address) => {
+const generateApproveCallData = (erc20TokenAddress: Address, paymasterAddress: Address) => {
     const approveData = encodeFunctionData({
         abi: [
             {
@@ -223,7 +215,7 @@ export const generateApproveCallData = (erc20TokenAddress: Address, paymasterAdd
     return callData
 }
 
-export const getInitializerCode = async ({
+const getInitializerCode = async ({
     owner,
     addModuleLibAddress,
     safe4337ModuleAddress,
@@ -332,7 +324,7 @@ export const getInitializerCode = async ({
     })
 }
 
-export const getAccountInitCode = async ({
+const getAccountInitCode = async ({
     owner,
     addModuleLibAddress,
     safe4337ModuleAddress,
@@ -406,7 +398,7 @@ export const getAccountInitCode = async ({
     return concatHex([safeProxyFactoryAddress, initCodeCallData])
 }
 
-export const getAccountAddress = async ({
+const getAccountAddress = async ({
     client,
     owner,
     addModuleLibAddress,
@@ -473,7 +465,7 @@ export const getAccountAddress = async ({
     })
 }
 
-export const encodeCallData = (params: { to: Address; value: bigint; data: `0x${string}` }) => {
+const encodeCallData = (params: { to: Address; value: bigint; data: `0x${string}` }) => {
     return encodeFunctionData({
         abi: [
             {
@@ -510,6 +502,47 @@ export const encodeCallData = (params: { to: Address; value: bigint; data: `0x${
     })
 }
 
+
+type safeAccountContextValue = {
+    //These are NOT Type safe. Certainly need to be revisited
+    authenticationStatus: any
+    signer: any
+    PublicClient: any
+    bundlerClient: any
+    pimlicoPaymasterClient: any
+    walletClient: any
+    safeAccount: any
+    setAuthenticationStatus: (authenticationStatus: any) => void
+    setSigner: (signer: any) => void
+    setWalletClient: (walletClient: any) => void
+    deploySafe: () => Promise<void>
+    actuallyDeploySafe: () => Promise<void>
+}
+
+const initialState = {
+    authenticationStatus: "unauthenticated",
+    signer: null,
+    PublicClient: null,
+    bundlerClient: null,
+    pimlicoPaymasterClient: null,
+    walletClient: null,
+    safeAccount: null,
+    setAuthenticationStatus: (authenticationStatus: any) => {},
+    setSigner: (signer: any) => {},
+    setWalletClient: (walletClient: any) => {},
+    deploySafe: async () => {},
+    actuallyDeploySafe: async () => {}
+}
+
+const safeAccountContext = createContext<safeAccountContextValue>(initialState)
+
+const useSafeAccountContext = () => {
+    const context = useContext(safeAccountContext)
+    if (!context) {
+        throw new Error('useSafeAccountContext must be used within a SafeAccountProvider')
+    }
+    return context
+}
 
 const SafeContextProvider = ({ children }: { children: React.ReactNode }) => {
     const [authenticationStatus, setAuthenticationStatus] = useState<any>(initialState.authenticationStatus)
@@ -590,6 +623,119 @@ const SafeContextProvider = ({ children }: { children: React.ReactNode }) => {
     
     }, [walletClient])
 
+    const actuallyDeploySafe = useCallback(async () => {
+        console.log(walletClient);
+
+        if (walletClient) {
+            try{
+                const signer = walletClientToSmartAccountSigner(walletClient)
+                setSigner(signer)
+                const initCode = await getAccountInitCode({
+                    owner: signer.address,
+                    addModuleLibAddress: `0x${safeConstAddresses.sepolia.ADD_MODULE_LIB_ADDRESS}`,
+                    safe4337ModuleAddress: `0x${safeConstAddresses.sepolia.SAFE_4337_MODULE_ADDRESS}`,
+                    safeProxyFactoryAddress: `0x${safeConstAddresses.sepolia.SAFE_PROXY_FACTORY_ADDRESS}`,
+                    safeSingletonAddress: `0x${safeConstAddresses.sepolia.SAFE_SINGLETON_ADDRESS}`,
+                    saltNonce: BigInt(0),
+                    multiSendAddress: `0x${safeConstAddresses.sepolia.SAFE_MULTISEND_ADDRESS}`,
+                    erc20TokenAddress: `0x${safeConstAddresses.sepolia.USDC_TOKEN_ADDRESS}`,
+                    paymasterAddress: `0x${safeConstAddresses.sepolia.ERC20_PAYMASTER_ADDRESS}`
+                });
+                
+                const sender = await getAccountAddress({
+                    client: PublicClient,
+                    owner: signer.address,
+                    addModuleLibAddress: `0x${safeConstAddresses.sepolia.ADD_MODULE_LIB_ADDRESS}`,
+                    safe4337ModuleAddress: `0x${safeConstAddresses.sepolia.SAFE_4337_MODULE_ADDRESS}`,
+                    safeProxyFactoryAddress: `0x${safeConstAddresses.sepolia.SAFE_PROXY_FACTORY_ADDRESS}`,
+                    safeSingletonAddress: `0x${safeConstAddresses.sepolia.SAFE_SINGLETON_ADDRESS}`, // Fix: Add `0x` prefix
+                    saltNonce: BigInt(0),
+                    multiSendAddress: `0x${safeConstAddresses.sepolia.SAFE_MULTISEND_ADDRESS}`, // Fix: Add `0x` prefix
+                    erc20TokenAddress: `0x${safeConstAddresses.sepolia.USDC_TOKEN_ADDRESS}`, // Fix: Add `0x` prefix
+                    paymasterAddress: `0x${safeConstAddresses.sepolia.ERC20_PAYMASTER_ADDRESS}`
+                });
+
+                //bytecode of contract (counterfactual)
+                const contractCode = null; //await PublicClient.getBytecode({ address: sender })
+
+                //generate a nonce from account
+                const nonce = await getAccountNonce(PublicClient as Client, {
+                    entryPoint: ENTRYPOINT_ADDRESS_V06,
+                    sender: sender
+                }); 
+                
+                console.log("sender: ", sender);
+                console.log("nonce: ", nonce);
+                
+                //encode data to call function , for user operation
+                const callData: `0x${string}` = encodeCallData({
+                    to: sender,
+                    data: '0x',
+                    value: 0n
+                });
+                
+                //create user operation
+                const sponsoredUserOperation: UserOperation = {
+                    sender,
+                    nonce,
+                    initCode: contractCode ? '0x' : initCode,
+                    callData,
+                    callGasLimit: 1n, // All gas values will be filled by Estimation Response Data.
+                    verificationGasLimit: 10000n,
+                    preVerificationGas: 10000n,
+                    maxFeePerGas: 1n,
+                    maxPriorityFeePerGas: 1n,
+                    paymasterAndData: `0x${safeConstAddresses.sepolia.ERC20_PAYMASTER_ADDRESS}`,
+                    signature: '0x'
+                }
+
+                //estimate gas 
+                if (USE_PAYMASTER) {
+                    const sponsorResult = await pimlicoPaymasterClient.sponsorUserOperation({
+                        userOperation: sponsoredUserOperation,
+                        entryPoint: ENTRYPOINT_ADDRESS_V06,
+                        sponsorshipPolicyId: SPONSORSHIP_POLICY_ID
+                    })
+
+                    sponsoredUserOperation.callGasLimit = sponsorResult.callGasLimit
+                    sponsoredUserOperation.verificationGasLimit = sponsorResult.verificationGasLimit
+                    sponsoredUserOperation.preVerificationGas = sponsorResult.preVerificationGas
+                    sponsoredUserOperation.paymasterAndData = sponsorResult.paymasterAndData
+                }
+                else {
+                    const gasEstimate = await bundlerClient.estimateUserOperationGas({
+                        userOperation: sponsoredUserOperation,
+                        entryPoint: ENTRYPOINT_ADDRESS_V06
+                    })
+                    const maxGasPriceResult = await bundlerClient.getUserOperationGasPrice()
+                    sponsoredUserOperation.callGasLimit = gasEstimate.callGasLimit
+                    sponsoredUserOperation.verificationGasLimit = gasEstimate.verificationGasLimit
+                    sponsoredUserOperation.preVerificationGas = gasEstimate.preVerificationGas
+                    sponsoredUserOperation.maxFeePerGas = maxGasPriceResult.fast.maxFeePerGas
+                    sponsoredUserOperation.maxPriorityFeePerGas = maxGasPriceResult.fast.maxPriorityFeePerGas
+                }
+                
+                //sign the operation 
+                sponsoredUserOperation.signature = await signUserOperation(
+                    sponsoredUserOperation,
+                    signer,
+                    sepolia.id,
+                    safeConstAddresses.sepolia.SAFE_4337_MODULE_ADDRESS
+                ); 
+                
+                //submit the operation 
+                const userOperationHash = await bundlerClient.sendUserOperation({
+                    userOperation: sponsoredUserOperation,
+                    entryPoint: ENTRYPOINT_ADDRESS_V06
+                });
+            } catch (e) {
+            console.error("Error deploying safe account", e)
+            }
+        }
+
+
+    }, [] )
+
     const value = {
         authenticationStatus,
         signer,
@@ -601,7 +747,8 @@ const SafeContextProvider = ({ children }: { children: React.ReactNode }) => {
         setAuthenticationStatus,
         setSigner,
         setWalletClient,
-        deploySafe
+        deploySafe,
+        actuallyDeploySafe
 
     };
 
@@ -610,6 +757,7 @@ const SafeContextProvider = ({ children }: { children: React.ReactNode }) => {
             {children}
         </safeAccountContext.Provider>
     )
+
 }
 
 export { SafeContextProvider, useSafeAccountContext }

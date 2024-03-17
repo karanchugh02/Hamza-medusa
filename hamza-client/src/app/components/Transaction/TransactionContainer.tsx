@@ -31,14 +31,15 @@ import { use } from "chai";
 
 
 const ButtonContainer = () => {
-    const { setWalletClient, deploySafe, walletClient, safeAccount } = useSafeAccountContext();
+    const { setWalletClient, actuallyDeploySafe, walletClient, safeAccount } = useSafeAccountContext();
     const { data: currentWallet } = useWalletClient();
     setWalletClient(currentWallet);
     const [ clicker, setClicker ] = useState<boolean>(false);
 
 
     useEffect(() => {
-        deploySafe();
+        
+        actuallyDeploySafe();
         console.log("safeAccount", safeAccount);
     }, [walletClient, clicker]);
 
