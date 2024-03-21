@@ -39,7 +39,7 @@ const ButtonContainer = () => {
 
     useEffect(() => {
         
-        actuallyDeploySafe();
+        actuallyDeploySafe(walletClient);
         console.log("safeAccount", safeAccount);
     }, [walletClient, clicker]);
 
