@@ -29,7 +29,12 @@ const RecommendedItems = () => {
                 marginRight={{ lg: 4 }}
                 flex="1" width="70%" bg="#2C272D">
                 <HStack justifyContent="space-around" mx={12} my={6}>
-                    <Box>
+                    <Box
+                        color="whitesmoke"
+                        fontWeight="bold"
+                        fontSize="2xl"
+                        textAlign="center"
+                    >
                         CONNECT YOUR <br/>
                         FAVORITE WALLET
                     </Box>
@@ -85,7 +90,10 @@ const RecommendedItems = () => {
                     borderRadius="full"
                 />
                 <HStack justifyContent="space-around" mx={12} my={6}>
-                    <Button fontWeight="italic" borderRadius="full" color="black" size='lg'>
+                    <Button fontWeight="italic" bg="white"
+                            size='lg'
+                            color="black"
+                            borderRadius="full">
                         <Image className="mr-2" src={fire} alt={"Img of a fire"} width={22} height={22}/>
                         Best Sellers</Button>
                     <Button fontWeight="italic" bg="black"

@@ -5,6 +5,8 @@ import { listRegions } from "@lib/data"
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
 import CartButton from "@modules/layout/components/cart-button"
 import SideMenu from "@modules/layout/components/side-menu"
+import Image from 'next/image'
+import logo from '../../../../../public/nav/hamza_logo.png'
 export default async function Nav() {
   const regions = await listRegions().then((regions) => regions)
 
@@ -24,7 +26,7 @@ export default async function Nav() {
               href="/"
               className="txt-compact-xlarge-plus hover:text-ui-fg-base uppercase"
             >
-              Hamza.biz
+             <Image src={logo} width={207.41} height={57.27} alt="Hamza Logo"/>
             </LocalizedClientLink>
           </div>
 
@@ -57,7 +59,7 @@ export default async function Nav() {
               }
             >
               <CartButton />
-              <ConnectButton />
+              <ConnectButton  />
             </Suspense>
           </div>
         </nav>

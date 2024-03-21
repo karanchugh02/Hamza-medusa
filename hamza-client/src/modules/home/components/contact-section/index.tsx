@@ -18,14 +18,15 @@ import Image from 'next/image'
 
 const ContactSection = () => {
     return (
-        <Box bg="gray.900" color="white" py={12} px={12}>
+        <Box bg="black" color="white" p={5}>
             <Card
                 direction={{base: 'column', md: 'row'}}
                 overflow="hidden"
                 variant="outline"
                 bg="#2C272D"
                 borderRadius="2xl"
-                p={{base: 6, md: 10}}
+                marginLeft={{lg: 4}}
+                marginRight={{lg: 4}}
             >
                 <VStack
                     spacing={5}
@@ -34,21 +35,23 @@ const ContactSection = () => {
                     p={6}
                 >
                     <CardBody>
-                        <Heading as="h2" size="xl" mb={4}>Ready to embrace HAMZA?</Heading>
-                        <Text fontSize="lg" opacity="0.8" mb={2}>Discover the Future of E-commerce</Text>
-                        <Text mb={4}>Dive into the vibrant world of Blockchain. Discover your next product today.</Text>
-                        <Flex>
-                            <FormControl id="first-name" isRequired mr={3}>
-                                <Input borderRadius="full" placeholder="First Name*"/>
-                            </FormControl>
-                            <FormControl id="email" isRequired mb={3}>
-                                <Input borderRadius="full" type="email" placeholder="E-Mail*"/>
-                            </FormControl>
-                        </Flex>
+                        <Heading color="white" as="h2" size="xl" mb={4}>Ready to embrace HAMZA?</Heading>
+                        <Text color="white" fontSize="lg" opacity="0.8" mb={2}>Discover the Future of E-commerce</Text>
+                        <Text color="white" mb={4}>Dive into the vibrant world of Blockchain. Discover your next product today.</Text>
+                        <Flex flexDirection="column" alignItems="center">
+                            <Flex mt="4">
+                                <FormControl id="first-name" isRequired mr={3}>
+                                    <Input color="white" borderColor="white" borderRadius="full" placeholder="First Name*"/>
+                                </FormControl>
+                                <FormControl id="email" isRequired mb={3}>
+                                    <Input borderColor="white" borderRadius="full" type="email" placeholder="E-Mail*"/>
+                                </FormControl>
+                            </Flex>
 
-                        <CardFooter>
-                            <Button size="lg" bg="#7B61FF" borderRadius="full">Subscribe</Button>
-                        </CardFooter>
+                            <Flex width="100%" justifyContent="center" mt={3}>
+                                <Button mx="2" size="lg" bg="#7B61FF" color="black" borderRadius="full">Subscribe</Button>
+                            </Flex>
+                        </Flex>
                     </CardBody>
                 </VStack>
 
@@ -57,12 +60,11 @@ const ContactSection = () => {
                     w={{base: '100%', md: '40%'}}
                     alignItems="center"
                     justifyContent="center"
-                    p={6}
                 >
                     <Image
                         objectFit="cover"
-l                        width={500}
-                        height={500}
+                        width={650}
+                        height={550}
                         src={Email}
                         alt="Inspirational"
                     />

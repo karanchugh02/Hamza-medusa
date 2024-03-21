@@ -7,6 +7,7 @@ import RecommendedItems from "@modules/home/components/products";
 import ToggleSection from "@modules/home/components/toggle-section"
 import Testimonials from "@modules/home/components/testimonials";
 import FAQSection from "@modules/home/components/FAQSection";
+import Reputation from "@modules/home/components/reputation";
 import { getRegion } from "app/actions"
 import { ProductCollectionWithPreviews } from "types/global"
 import ContactSection from "@modules/home/components/contact-section";
@@ -75,6 +76,7 @@ export default async function Home({
         <RecommendedItems />
         <ToggleSection />
         <Testimonials />
+        <Reputation />
         <FAQSection/>
         <ContactSection/>
       {/*<div className="py-12">*/}

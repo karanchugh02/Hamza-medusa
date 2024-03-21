@@ -8,9 +8,9 @@ import { jsonRpcProvider } from "wagmi/providers/jsonRpc"
 const PROJECT_ID = "aba29725308468c8020e93258c08236e"
 
 export const darkThemeConfig = darkTheme({
-  accentColor: "#7b3fe4",
+  accentColor: "#94D42A",
   accentColorForeground: "white",
-  borderRadius: "small",
+  borderRadius: "large",
   fontStack: "system",
   overlayBlur: "small",
 })

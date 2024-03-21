@@ -27,6 +27,7 @@ const Testimonial = () => {
                     w={['100%', '48%', '48%']}
                     p={12}
                     borderRadius="2xl"
+                    minHeight="350px"
                     boxShadow="lg" // Added shadow for depth
                     color={textColor}
                 >
@@ -57,13 +58,14 @@ const Testimonial = () => {
                     bg={cardBgRight}
                     bgImage={`url(${test_2.src})`}
                     style={{
-                        backgroundSize: '250px', // Use your desired size
+                        backgroundSize: '300px', // Use your desired size
                     }}
                     bgPosition="right bottom"
                     bgRepeat="no-repeat"
                     w={['100%', '48%', '48%']}
                     p={12}
                     borderRadius="2xl"
+                    minHeight="350px"
                     boxShadow="lg" // Added shadow for depth
                     color={textColor}
                 >
