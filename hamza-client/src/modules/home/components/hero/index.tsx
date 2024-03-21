@@ -39,7 +39,6 @@ const Hero = () => {
     
     return (
         <>
-        <TransactionContainer />
         <Flex maxW="100%" bg="black" p={5}>
             <Box
                 p={5}
