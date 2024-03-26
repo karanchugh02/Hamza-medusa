@@ -16,7 +16,7 @@ type Params = {
     }
 }
 
-export default async function StorePage({ searchParams, params }: Params) {
+export default function StorePage({ searchParams, params }: Params) {
     const { page } = searchParams
 
     return <StoreTemplate page={page} countryCode={params.countryCode} />

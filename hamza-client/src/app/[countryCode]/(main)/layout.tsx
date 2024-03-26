@@ -9,7 +9,7 @@ export const metadata: Metadata = {
     metadataBase: new URL(MEDUSA_CLIENT_URL),
 }
 
-export default async function PageLayout(props: { children: React.ReactNode }) {
+export default function PageLayout(props: { children: React.ReactNode }) {
     return (
         <>
             <Nav />

@@ -34,8 +34,12 @@ export async function getRegion(countryCode: string) {
             : regionMap.get('us')
 
         return region
-    } catch (e: any) {
-        console.log(e.toString())
+    } catch (e: unknown) {
+        if (e instanceof Error) {
+            console.log(e.message)
+        } else {
+            console.log('An unexpected error occurred', e)
+        }
         return null
     }
 }
@@ -68,7 +72,7 @@ export async function updateRegion(countryCode: string, currentPath: string) {
     redirect(`/${countryCode}${currentPath}`)
 }
 
-export async function resetOnboardingState(orderId: string) {
+export function resetOnboardingState(orderId: string) {
     cookies().set('_medusa_onboarding', 'false', { maxAge: -1 })
     redirect(`${ADMIN_CORS}/a/orders/${orderId}`)
 }
