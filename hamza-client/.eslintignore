@@ -1,0 +1,15 @@
+dist/
+config/
+node_modules/
+
+# .eslintignore
+
+# Ignore configuration files
+babel.config.js
+tailwind.config.js
+.eslintrc.js
+package.json
+package-lock.json
+yarn.lock
+
+# Ignore build output and node_modules
