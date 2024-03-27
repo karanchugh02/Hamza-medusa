@@ -85,6 +85,9 @@
                 "currency_code": "eur",
                 "amount": 299
               },
+              {"currency_code": "eth",
+                "amount": 50000000
+              },
               {
                 "currency_code": "usd",
                 "amount": 350
@@ -127,6 +130,10 @@
               {
                 "currency_code": "eur",
                 "amount": 280
+              },
+              {
+                "currency_code": "eth",
+                "amount": 40000000
               },
               {
                 "currency_code": "usd",
@@ -172,6 +179,10 @@
                 "amount": 270
               },
               {
+                "currency_code": "eth",
+                "amount": 20000000
+              },
+              {
                 "currency_code": "usd",
                 "amount": 290
               }
@@ -213,6 +224,10 @@
               {
                 "currency_code": "eur",
                 "amount": 310
+              },
+              {
+                "currency_code": "eth",
+                "amount": 25000000
               },
               {
                 "currency_code": "usd",
@@ -258,6 +273,10 @@
                 "amount": 320
               },
               {
+                "currency_code": "eth",
+                "amount": 21000000
+              },
+              {
                 "currency_code": "usd",
                 "amount": 340
               }
@@ -301,6 +320,10 @@
                 "amount": 250
               },
               {
+                "currency_code": "eth",
+                "amount": 22000000
+              },
+              {
                 "currency_code": "usd",
                 "amount": 270
               }
@@ -342,6 +365,10 @@
               {
                 "currency_code": "eur",
                 "amount": 260
+              },
+              {
+                "currency_code": "eth",
+                "amount": 15000000
               },
               {
                 "currency_code": "usd",
