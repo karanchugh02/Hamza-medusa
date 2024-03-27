@@ -55,7 +55,11 @@ export const config: MiddlewaresConfig = {
       matcher: "/admin/collections",
       middlewares: [
         cors({
-          origin: [STORE_CORS],
+          origin: [
+            STORE_CORS,
+            "http://localhost:7001",
+            "http://localhost:7000",
+          ],
           credentials: true,
         }),
       ],
