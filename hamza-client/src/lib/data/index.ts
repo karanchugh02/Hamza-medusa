@@ -25,6 +25,7 @@ import { cookies } from "next/headers"
 
 // Authentication actions
 // TODO: Modified to use StorePostAuthReqCustom instead of StorePostAuthReq (DONE?)
+// TODO: Fix StorePostAuthReqCustom to remove typeorm error
 declare class StorePostAuthReqCustom extends StorePostAuthReq{
   wallet_address: string
 }

@@ -2,7 +2,7 @@
   "name": "medusa-starter-default",
   "version": "0.0.1",
   "description": "A starter for Medusa projects.",
-  "author": "Medusa (https://medusajs.com)",
+  "author": "Hamza Team",
   "license": "MIT",
   "keywords": [
     "sqlite",
@@ -45,7 +45,7 @@
     "medusa-payment-manual": "^1.0.24",
     "medusa-payment-stripe": "^6.0.7",
     "prism-react-renderer": "^2.0.4",
-    "siwe": "^2.1.4",
+    "siwe": "2.1.4",
     "typeorm": "^0.3.16"
   },
   "devDependencies": {
