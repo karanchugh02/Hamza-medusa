@@ -16,9 +16,10 @@ import {
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query"
 const queryClient = new QueryClient()
 import { SiweMessage } from "siwe"
-import { getCustomer, getToken } from "@lib/data"
-import { revalidateTag } from "next/cache"
-import { signOut } from "@modules/account/actions"
+
+// IMPORTANT NOTE: We CANT use server-side rendering for this component, it must be client-side only.
+// Setting "use client" in the parent directory makes all the leaf components client-side only. However, if we are only using it as a provider, such that
+// We pass children to it, then we can use it in the parent directory and it will work fine. - GN
 
 const MEDUSA_SERVER_URL = process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL || "http://localhost:9000";
 const VERIFY_MSG = `${MEDUSA_SERVER_URL}/custom/verify`
@@ -26,11 +27,12 @@ const GET_NONCE = `${MEDUSA_SERVER_URL}/custom/nonce`
 export function RainbowWrapper({ children }: { children: React.ReactNode }) {
   const [status, setStatus] = useState<AuthenticationStatus>("unauthenticated")
 
-  useEffect(() => {
-    getCustomer().then((customer) => {
-      setStatus(customer?.has_account ? "authenticated" : "unauthenticated");
-    }).catch(() => { console.log("rainbow-provider: customer not found")});
-  }, []);
+  // TODO: STEP 1. Implement this later using CONTEXT API as a global state for initial version. Step 2: Refactor; use State Management Library
+  // useEffect(() => {
+  //   getCustomer().then((customer) => {
+  //     setStatus(customer?.has_account ? "authenticated" : "unauthenticated");
+  //   }).catch(() => { console.log("rainbow-provider: customer not found")});
+  // }, []);
 
   const walletSignature = createAuthenticationAdapter({
     getNonce: async () => {
@@ -76,18 +78,19 @@ export function RainbowWrapper({ children }: { children: React.ReactNode }) {
       const authenticationStatus = Boolean(verifyRes.ok) ? "authenticated" : "unauthenticated";
       console.log(`Verification status: ${authenticationStatus}`);
       setStatus(authenticationStatus);
-
-      await getToken({ 
-        wallet_address: message.address,
-        email: "", password: ""
-      }).then(() => {
-        revalidateTag("customer")
-      });
       return Boolean(verifyRes.ok);
+
+
+      // await getToken({
+      //   wallet_address: message.address,
+      //   email: "", password: ""
+      // }).then(() => {
+      //   revalidateTag("customer")
+      // });
     },
 
     signOut: async () => {
-      await signOut();
+      console.log("Signing out...")
     },
   })
 

@@ -1,15 +1,15 @@
 "use server"
-
 import {
   ProductCategory,
   ProductCollection,
+  Region,
   StoreGetProductsParams,
-  StorePostCartsCartReq,
-  StorePostCustomersReq,
   StorePostAuthReq,
+  StorePostCartsCartReq,
   StorePostCustomersCustomerAddressesAddressReq,
   StorePostCustomersCustomerAddressesReq,
   StorePostCustomersCustomerReq,
+  StorePostCustomersReq,
 } from "@medusajs/medusa"
 import { PricedProduct } from "@medusajs/medusa/dist/types/pricing"
 
@@ -19,7 +19,7 @@ import { SortOptions } from "@modules/store/components/refinement-list/sort-prod
 import { getRegion } from "app/actions"
 import { ProductCategoryWithChildren, ProductPreviewType } from "types/global"
 
-import { medusaClient } from "../config"
+import { medusaClient } from "@lib/config"
 import medusaError from "@lib/util/medusa-error"
 import { cookies } from "next/headers"
 
